@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godstreasure Joshua Assi | Backend Developer</title>
+    <meta name="description" content="Godstreasure Joshua Assi is a Backend Developer based in Uyo, Nigeria. Specializing in TypeScript, Node.js, NestJS, and PostgreSQL.">
+    <meta name="author" content="Godstreasure Joshua Assi">
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link rel="apple-touch-icon" href="favicon.jpg">
+    <!-- Tailwind CSS with Dark Mode support -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        },
+                        secondary: '#8b5cf6',
+                        accent: '#8b5cf6',
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                        },
+                        darkbg: '#0b0f19',
+                        darkcard: '#111827',
+                        darkborder: '#1f2937'
+                    }
+                }
+            }
+        };
+    </script>
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Touch and mobile responsiveness improvements */
+        html {
+            -webkit-tap-highlight-color: transparent;
+            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #10b981);
+            z-index: 100;
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 5px; }
+
+        /* Glassmorphism Card Styles */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .dark .glass {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-hover:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+        .dark .glass-hover:hover {
+            background: rgba(17, 24, 39, 0.9);
+        }
+        /* Line Clamp fallback */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+        /* Scroll Reveal In & Out Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-35px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(35px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92) translateY(20px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        /* Active State (Scrolled Into View) */
+        .reveal.active,
+        .reveal-left.active,
+        .reveal-right.active,
+        .reveal-scale.active {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+
+        /* Scrolled Out State (Exited through top when scrolling down) */
+        .reveal.exited-top {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        .reveal-left.exited-top {
+            opacity: 0;
+            transform: translateX(-35px) translateY(-10px);
+        }
+        .reveal-right.exited-top {
+            opacity: 0;
+            transform: translateX(35px) translateY(-10px);
+        }
+        .reveal-scale.exited-top {
+            opacity: 0;
+            transform: scale(0.92) translateY(-20px);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Code Block Glow */
+        .code-glow {
+            box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.25);
+        }
+
+        /* High-End Glassmorphism Navbar Styling */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px) saturate(190%);
+            -webkit-backdrop-filter: blur(20px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.85);
+        }
+        .dark .nav-glass {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        .nav-glass-scrolled {
+            background: rgba(255, 255, 255, 0.65) !important;
+            box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.12), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9) !important;
+        }
+        .dark .nav-glass-scrolled {
+            background: rgba(15, 23, 42, 0.75) !important;
+            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2) !important;
+        }
+
+        /* Background grid pattern */
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(156, 163, 175, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(156, 163, 175, 0.05) 1px, transparent 1px);
+        }
+        .dark .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-darkbg text-gray-800 dark:text-gray-100 font-sans antialiased selection:bg-primary-500 selection:text-white transition-colors duration-300 relative overflow-x-hidden">
+
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress"></div>
+
+    <!-- Floating Glassmorphic Navigation Bar (Does not touch sides) -->
+    <header class="fixed top-3 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none">
+        <nav id="navbar" class="w-full max-w-6xl pointer-events-auto transition-all duration-300 nav-glass rounded-2xl px-3.5 sm:px-6 py-2.5 sm:py-3 shadow-xl">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center space-x-2.5 sm:space-x-3 group cursor-pointer">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300 shrink-0 ring-1 ring-white/20">
+                        <img src="favicon.jpg" alt="Logo" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-base sm:text-lg font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+                            Godstreasure<span class="text-primary-500">.</span>
+                        </span>
+                        <span class="text-[9px] sm:text-[10px] uppercase font-mono tracking-wider sm:tracking-widest text-gray-500 dark:text-gray-400">Backend Dev</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="#home" class="nav-link text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">Home</a>
+                    <a href="#about" class="nav-link text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">About</a>
+                    <a href="#skills" class="nav-link text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">Stack</a>
+                    <a href="#projects" class="nav-link text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">Projects</a>
+                    <a href="#achievements" class="nav-link text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">Achievements</a>
+                    <a href="#contact" class="nav-link text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">Contact</a>
+                </div>
+
+                <!-- Right Side Actions (Theme Toggle & CTA) -->
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <!-- Dark/Light Mode Toggle Button -->
+                    <button id="theme-toggle" type="button" aria-label="Toggle Dark/Light Mode" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/50 dark:bg-gray-800/60 border border-white/40 dark:border-white/10 text-gray-700 dark:text-yellow-400 hover:bg-white/80 dark:hover:bg-gray-700/80 flex items-center justify-center transition-all duration-300 focus:outline-none backdrop-blur-md">
+                        <i id="theme-toggle-icon" class="fas fa-sun text-sm sm:text-base"></i>
+                    </button>
+
+                    <a href="#contact" class="hidden sm:inline-flex items-center space-x-2 bg-gradient-to-r from-primary-600 to-secondary text-white text-xs sm:text-sm font-semibold px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-300 hover:-translate-y-0.5">
+                        <i class="fas fa-paper-plane text-xs"></i>
+                        <span>Get In Touch</span>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" aria-label="Open Mobile Menu" class="md:hidden text-gray-700 dark:text-gray-200 hover:text-primary-500 p-2 focus:outline-none rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/50 transition-colors">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Dropdown (Inside floating glass island) -->
+            <div id="mobile-menu" class="hidden md:hidden mt-3 pt-3 border-t border-gray-200/40 dark:border-gray-700/40 space-y-1 font-medium">
+                <a href="#home" class="mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-white/60 dark:hover:bg-white/10 transition-colors text-sm">
+                    <i class="fas fa-home w-4 text-gray-400"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#about" class="mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-white/60 dark:hover:bg-white/10 transition-colors text-sm">
+                    <i class="fas fa-user w-4 text-gray-400"></i>
+                    <span>About</span>
+                </a>
+                <a href="#skills" class="mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-white/60 dark:hover:bg-white/10 transition-colors text-sm">
+                    <i class="fas fa-code w-4 text-gray-400"></i>
+                    <span>Stack</span>
+                </a>
+                <a href="#projects" class="mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-white/60 dark:hover:bg-white/10 transition-colors text-sm">
+                    <i class="fas fa-folder w-4 text-gray-400"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="#achievements" class="mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-white/60 dark:hover:bg-white/10 transition-colors text-sm">
+                    <i class="fas fa-trophy w-4 text-gray-400"></i>
+                    <span>Achievements</span>
+                </a>
+                <a href="#contact" class="mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-white/60 dark:hover:bg-white/10 transition-colors text-sm">
+                    <i class="fas fa-envelope w-4 text-gray-400"></i>
+                    <span>Contact</span>
+                </a>
+                <div class="pt-2">
+                    <a href="#contact" class="mobile-nav-link block text-center bg-gradient-to-r from-primary-600 to-secondary text-white py-2.5 rounded-xl font-semibold shadow-md text-sm">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen pt-24 pb-12 sm:pt-28 sm:pb-16 lg:py-32 flex items-center relative overflow-hidden bg-grid-pattern">
+        <!-- Glow Backdrops (Responsive sizing) -->
+        <div class="absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-primary-500/10 dark:bg-primary-500/20 rounded-full blur-3xl pointer-events-none -translate-x-1/2"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-secondary/10 dark:bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                
+                <!-- Left: Hero Text -->
+                <div class="lg:col-span-7 text-center lg:text-left">
+                    <!-- Status Badge -->
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[11px] sm:text-xs font-mono font-medium mb-4 sm:mb-6 reveal max-w-full">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+                        <span>Open to new opportunities · Remote friendly</span>
+                    </div>
+
+                    <!-- Main Heading -->
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-[1.15] mb-4 sm:mb-6 reveal reveal-left break-words">
+                        Hi, I'm <br class="hidden sm:inline">
+                        <span class="gradient-text">Godstreasure Joshua Assi</span>
+                    </h1>
+
+                    <!-- Professional Title -->
+                    <div class="text-lg sm:text-xl md:text-2xl font-mono font-semibold text-primary-600 dark:text-primary-400 mb-4 sm:mb-6 reveal">
+                        &gt; Backend Developer_
+                    </div>
+
+                    <!-- Timeline / Tagline -->
+                    <p class="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0 reveal reveal-left">
+                        Building fast, type-safe APIs and reliable server-side architectures. Focused on turning complex business logic into clean, maintainable systems with TypeScript, Node.js, Nest.js and PostgreSQL.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start reveal">
+                        <a href="#contact" class="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-primary-600 to-secondary hover:from-primary-700 hover:to-secondary text-white px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl font-medium shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all duration-300 hover:-translate-y-0.5 text-sm sm:text-base">
+                            <i class="fas fa-paper-plane text-xs"></i>
+                            <span>Let's Talk</span>
+                        </a>
+                        <a href="#projects" class="inline-flex items-center justify-center space-x-2 bg-white dark:bg-darkcard border border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-200 px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl font-medium hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-300 hover:-translate-y-0.5 shadow-sm text-sm sm:text-base">
+                            <i class="fas fa-folder-open text-primary-500"></i>
+                            <span>See What I've Built</span>
+                        </a>
+                        <a href="resume.html" class="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-primary-600 to-secondary hover:from-primary-700 hover:to-secondary text-white px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl font-medium shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all duration-300 hover:-translate-y-0.5 text-sm sm:text-base">
+                            <i class="fas fa-file-pdf text-xs"></i>
+                            <span>View Resume</span>
+                        </a>
+                    </div>
+
+                    <!-- Micro Metrics Bar -->
+                    <div class="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gray-200 dark:border-gray-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-center sm:text-left reveal">
+                        <div class="p-3 sm:p-0 rounded-xl bg-gray-100/70 sm:bg-transparent dark:bg-darkcard sm:dark:bg-transparent">
+                            <div class="text-[11px] uppercase font-mono text-gray-400">Core Specialty</div>
+                            <div class="text-sm font-semibold text-gray-800 dark:text-gray-200">Node.js & NestJS</div>
+                        </div>
+                        <div class="p-3 sm:p-0 rounded-xl bg-gray-100/70 sm:bg-transparent dark:bg-darkcard sm:dark:bg-transparent">
+                            <div class="text-[11px] uppercase font-mono text-gray-400">Database Layer</div>
+                            <div class="text-sm font-semibold text-gray-800 dark:text-gray-200">PostgreSQL & Drizzle</div>
+                        </div>
+                        <div class="p-3 sm:p-0 rounded-xl bg-gray-100/70 sm:bg-transparent dark:bg-darkcard sm:dark:bg-transparent">
+                            <div class="text-[11px] uppercase font-mono text-gray-400">Location</div>
+                            <div class="text-sm font-semibold text-gray-800 dark:text-gray-200">Uyo, Nigeria (WAT)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Backend Terminal & Real Code Mockup -->
+                <div class="lg:col-span-5 reveal reveal-right w-full">
+                    <div class="relative code-glow rounded-2xl overflow-hidden bg-gray-900 border border-gray-700/70 shadow-2xl max-w-full">
+                        <!-- Terminal Window Bar -->
+                        <div class="bg-gray-800/90 px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between border-b border-gray-700/60">
+                            <div class="flex items-center space-x-1.5 sm:space-x-2">
+                                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500 inline-block"></span>
+                                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500 inline-block"></span>
+                                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500 inline-block"></span>
+                            </div>
+                            <div class="text-[11px] sm:text-xs font-mono text-gray-400 flex items-center space-x-1.5">
+                                <i class="fas fa-file-code text-cyan-400"></i>
+                                <span class="truncate">users.service.ts</span>
+                            </div>
+                            <div class="text-[9px] sm:text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-500/20">
+                                200 OK
+                            </div>
+                        </div>
+
+                        <!-- Code Content (Authentic Backend NestJS + Drizzle logic) -->
+                        <div class="p-3.5 sm:p-5 font-mono text-[11px] sm:text-xs text-gray-300 leading-relaxed overflow-x-auto space-y-1.5 sm:space-y-2">
+                            <div><span class="text-purple-400">import</span> { <span class="text-yellow-300">Injectable</span>, <span class="text-yellow-300">NotFoundException</span> } <span class="text-purple-400">from</span> <span class="text-emerald-300">'@nestjs/common'</span>;</div>
+                            <div><span class="text-purple-400">import</span> { <span class="text-yellow-300">db</span> } <span class="text-purple-400">from</span> <span class="text-emerald-300">'../db/client'</span>;</div>
+                            <div><span class="text-purple-400">import</span> { <span class="text-yellow-300">users</span> } <span class="text-purple-400">from</span> <span class="text-emerald-300">'../db/schema'</span>;</div>
+                            <div><span class="text-purple-400">import</span> { <span class="text-yellow-300">eq</span> } <span class="text-purple-400">from</span> <span class="text-emerald-300">'drizzle-orm'</span>;</div>
+                            <div class="py-0.5"></div>
+                            <div><span class="text-blue-400">@Injectable</span>()</div>
+                            <div><span class="text-purple-400">export class</span> <span class="text-yellow-300">UsersService</span> {</div>
+                            <div class="pl-3 sm:pl-4"><span class="text-purple-400">async</span> <span class="text-blue-300">findById</span>(id: <span class="text-yellow-300">string</span>) {</div>
+                            <div class="pl-6 sm:pl-8 text-gray-400">// Query database with type-safe schema</div>
+                            <div class="pl-6 sm:pl-8"><span class="text-purple-400">const</span> record = <span class="text-purple-400">await</span> db.query.users.<span class="text-blue-300">findFirst</span>({</div>
+                            <div class="pl-9 sm:pl-12">where: <span class="text-blue-300">eq</span>(users.id, id),</div>
+                            <div class="pl-9 sm:pl-12">with: { profile: <span class="text-yellow-400">true</span>, roles: <span class="text-yellow-400">true</span> }</div>
+                            <div class="pl-6 sm:pl-8">});</div>
+                            <div class="py-0.5"></div>
+                            <div class="pl-6 sm:pl-8"><span class="text-purple-400">if</span> (!record) {</div>
+                            <div class="pl-9 sm:pl-12"><span class="text-purple-400">throw new</span> <span class="text-yellow-300">NotFoundException</span>(<span class="text-emerald-300">`User #${id} not found`</span>);</div>
+                            <div class="pl-6 sm:pl-8">}</div>
+                            <div class="pl-6 sm:pl-8"><span class="text-purple-400">return</span> record;</div>
+                            <div class="pl-3 sm:pl-4">}</div>
+                            <div>}</div>
+                        </div>
+
+                        <!-- Terminal Footer Status -->
+                        <div class="bg-gray-950/80 px-3 sm:px-4 py-2 sm:py-2.5 border-t border-gray-800 flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-gray-400">
+                            <div class="flex items-center space-x-1.5 sm:space-x-2">
+                                <i class="fas fa-database text-blue-400"></i>
+                                <span>PostgreSQL: Connected</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 sm:space-x-2 text-emerald-400">
+                                <i class="fas fa-bolt text-yellow-400"></i>
+                                <span>Query: ~4ms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-darkcard border-y border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16 reveal">
+                <span class="text-xs font-mono font-semibold uppercase tracking-wider text-primary-500 bg-primary-500/10 px-3 py-1 rounded-full">Background</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-3 sm:mt-4 mb-3 sm:mb-4">Building what happens behind the scenes</h2>
+                <div class="w-16 h-1 bg-gradient-to-r from-primary-500 to-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <!-- Left Bio Card -->
+                <div class="space-y-4 sm:space-y-6 reveal reveal-left">
+                    <p class="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed">
+                        I'm <strong class="text-gray-900 dark:text-white font-semibold">Godstreasure Joshua Assi</strong>, a backend engineer based in Uyo, Nigeria. I like working on the parts of software people don't see directly, but definitely feel when things run fast and smoothly—solid API contracts, clean database queries, and server architectures that don't fall over when traffic spikes.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed">
+                        Most of my days are spent working with <strong class="text-primary-500 font-semibold">TypeScript</strong>, <strong class="text-primary-500 font-semibold">NestJS</strong>, and <strong class="text-primary-500 font-semibold">PostgreSQL</strong>. I care a lot about developer ergonomics: structuring code cleanly with Drizzle or TypeORM so that anyone jumping into the codebase (including future me) can reason about it quickly.
+                    </p>
+
+                    <div class="pt-2 sm:pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div class="p-4 rounded-xl bg-gray-50 dark:bg-darkbg border border-gray-200 dark:border-gray-800">
+                            <i class="fas fa-shield-alt text-primary-500 text-lg mb-2"></i>
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Type Safety First</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Catching runtime bugs at compile time with strict TypeScript and validation DTOs.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-gray-50 dark:bg-darkbg border border-gray-200 dark:border-gray-800">
+                            <i class="fas fa-cubes text-secondary text-lg mb-2"></i>
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Modular Systems</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Decoupled services with clear boundaries and sensible dependency injection.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Feature Highlights -->
+                <div class="space-y-3 sm:space-y-4 reveal reveal-right">
+                    <!-- Feature 1 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-darkbg border border-gray-200 dark:border-gray-800/80 hover:border-primary-500/50 transition-all duration-300">
+                        <div class="flex items-start space-x-3.5 sm:space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-primary-500/10 text-primary-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fas fa-network-wired text-sm sm:text-base"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm sm:text-base">Predictable API Design</h4>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Designing clean RESTful endpoints with consistent error responses, strict input validation, and automated Swagger documentation that client teams actually enjoy using.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-darkbg border border-gray-200 dark:border-gray-800/80 hover:border-primary-500/50 transition-all duration-300">
+                        <div class="flex items-start space-x-3.5 sm:space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fas fa-database text-sm sm:text-base"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm sm:text-base">Relational Database Schemas</h4>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">PostgreSQL schema design, type-safe migrations with Drizzle, index optimization, and writing queries that stay snappy as data volume grows.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-darkbg border border-gray-200 dark:border-gray-800/80 hover:border-primary-500/50 transition-all duration-300">
+                        <div class="flex items-start space-x-3.5 sm:space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fas fa-server text-sm sm:text-base"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm sm:text-base">NestJS Enterprise Architecture</h4>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Building structured backend services utilizing interceptors, custom decorators, role guards, and modular domain separation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Tech Stack Section -->
+    <section id="skills" class="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-darkbg transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16 reveal">
+                <span class="text-xs font-mono font-semibold uppercase tracking-wider text-primary-500 bg-primary-500/10 px-3 py-1 rounded-full">Toolkit</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-3 sm:mt-4 mb-3 sm:mb-4">Technologies I use day-to-day</h2>
+                <p class="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400">The core frameworks, databases, and architectural tools I rely on to ship production services.</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-primary-500 to-secondary mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Stack 1: Core Backend -->
+                <div class="bg-white dark:bg-darkcard p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300 reveal reveal-scale">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-11 h-11 rounded-xl bg-indigo-500/10 text-primary-500 flex items-center justify-center text-lg">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white">Core Backend</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Runtimes & Frameworks</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Node.js
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-primary-500 to-indigo-600 rounded-full transition-all duration-1000" style="width: 0%" data-width="95%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                NestJS
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-red-500 to-primary-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="76%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                TypeScript
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="90%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Express.js
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-gray-500 to-gray-700 rounded-full transition-all duration-1000" style="width: 0%" data-width="45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stack 2: Databases & Storage -->
+                <div class="bg-white dark:bg-darkcard p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300 reveal reveal-scale" style="transition-delay: 0.1s">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-lg">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white">Database & ORM</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Relational & Document</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                PostgreSQL
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="69%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                SQL Schema & Migrations
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="59%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                TypeORM / Prisma
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="40%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stack 3: Architecture & Tooling -->
+                <div class="bg-white dark:bg-darkcard p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300 reveal reveal-scale" style="transition-delay: 0.2s">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-11 h-11 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-lg">
+                            <i class="fas fa-shield-virus"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white">Architecture & APIs</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Security & Integration</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                RESTful Architecture
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="40%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Drizzle ORM
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="58%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Git & Version Control
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-orange-500 to-red-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="78%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="text-xs font-mono font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                API Documentation (Swagger)
+                            </div>
+                            <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-darkcard border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16 reveal">
+                <span class="text-xs font-mono font-semibold uppercase tracking-wider text-primary-500 bg-primary-500/10 px-3 py-1 rounded-full">Work & Architecture</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-3 sm:mt-4 mb-3 sm:mb-4">Things I've Built & Explored</h2>
+                <div class="w-16 h-1 bg-gradient-to-r from-primary-500 to-secondary mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+                <!-- PROJECT 1: AI ADs Studio -->
+                <div class="glass p-6 rounded-2xl glass-hover transition-all group hover:border-primary/50 reveal reveal-scale" style="transition-delay: 0.1s">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded">Live</span>
+                        <span class="text-xs text-slate-500">Group project</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">AI ADs Studio</h3>
+                    <p class="text-slate-400 text-sm mb-6 line-clamp-2">AI-driven ad generation interface built through collaboration at Start Innovation Hub.</p>
+                    <a href="https://ai-ads-studio-kappa.vercel.app/" class="text-primary font-medium text-sm hover:text-accent transition-colors flex items-center gap-1">
+                        View live project <span>→</span>
+                    </a>
+                </div>
+
+                <!-- PROJECT 2: LaunchBoost -->
+                <div class="glass p-6 rounded-2xl glass-hover transition-all group hover:border-primary/50 reveal reveal-scale" style="transition-delay: 0.2s">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-medium bg-accent/10 text-accent px-2 py-1 rounded">Personal</span>
+                        <span class="text-xs text-slate-500">Landing page</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">LaunchBoost</h3>
+                    <p class="text-slate-400 text-sm mb-6 line-clamp-2">High-converting landing page crafted with responsive design and modern micro-interactions.</p>
+                    <a href="launchboost-two.vercel.app" class="text-primary font-medium text-sm hover:text-accent transition-colors flex items-center gap-1">
+                        View live project <span>→</span>
+                    </a>
+                </div>
+
+                <!-- PROJECT 3: Coldchain Logistics -->
+                <div class="glass p-6 rounded-2xl glass-hover transition-all group hover:border-primary/50 reveal reveal-scale" style="transition-delay: 0.3s">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-medium text-slate-500">Logistics</span>
+                        <span class="text-xs text-slate-500">Platform interface</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Coldchain Logistics</h3>
+                    <p class="text-slate-400 text-sm mb-6 line-clamp-2">Modern logistics platform interface tailored for cold storage and supply chain monitoring.</p>
+                    <a href="https://tboiassi.github.io/cold-chain/" class="text-primary font-medium text-sm hover:text-accent transition-colors flex items-center gap-1">
+                        View live project <span>→</span>
+                    </a>
+                </div>
+
+                <!-- PROJECT 4: Ads Display Showcase -->
+                <div class="glass p-6 rounded-2xl glass-hover transition-all group hover:border-primary/50 reveal reveal-scale" style="transition-delay: 0.4s">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-medium text-slate-500">Showcase</span>
+                        <span class="text-xs text-slate-500">Gadget showcase</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Ads Display Showcase</h3>
+                    <p class="text-slate-400 text-sm mb-6 line-clamp-2">Interactive gadget and phone advertisement showcase highlighting product features.</p>
+                    <a href="https://tboiassi.github.io/ads-phones/" class="text-primary font-medium text-sm hover:text-accent transition-colors flex items-center gap-1">
+                        View live project <span>→</span>
+                    </a>
+                </div>
+
+                <!-- PROJECT 5: Logistica Backend -->
+                <div class="glass p-6 rounded-2xl glass-hover transition-all group hover:border-primary/50 reveal reveal-scale" style="transition-delay: 0.5s">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-medium text-slate-500">Backend</span>
+                        <span class="text-xs text-slate-500">Collaborative</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Logistica Backend</h3>
+                    <p class="text-slate-400 text-sm mb-6 line-clamp-2">Built collaboratively at Start Innovation Hub. Role: Backend Deployment.</p>
+                    <a href="logistica-one-mu.vercel.app" class="text-primary font-medium text-sm hover:text-accent transition-colors flex items-center gap-1">
+                        View details <span>→</span>
+                    </a>
+                </div>
+
+                <!-- PROJECT 6: Voltix -->
+                <div class="glass p-6 rounded-2xl glass-hover transition-all group hover:border-primary/50 reveal reveal-scale" style="transition-delay: 0.6s">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-medium bg-yellow-500/10 text-yellow-400 px-2 py-1 rounded">In Progress</span>
+                        <span class="text-xs text-slate-500">Energy platform</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Voltix</h3>
+                    <p class="text-slate-400 text-sm mb-6 line-clamp-2">Full-featured energy platform app. Role: Frontend &amp; Deployment.</p>
+                    <a href="https://voltix-app.onrender.com/" class="text-primary font-medium text-sm hover:text-accent transition-colors flex items-center gap-1">
+                        View live project <span>→</span>
+                    </a>
+                </div>
+
+                <!-- PROJECT 7: NueBank -->
+                <div class="glass p-6 rounded-2xl glass-hover transition-all group hover:border-primary/50 reveal reveal-scale" style="transition-delay: 0.7s">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-medium bg-yellow-500/10 text-yellow-400 px-2 py-1 rounded">In Progress</span>
+                        <span class="text-xs text-slate-500">E-banking</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">NueBank</h3>
+                    <p class="text-slate-400 text-sm mb-6 line-clamp-2">Simple E-banking design. Role: Frontend &amp; Deployment.</p>
+                    <a href="https://nuetechbank.onrender.com/" class="text-primary font-medium text-sm hover:text-accent transition-colors flex items-center gap-1">
+                        View live project <span>→</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Achievements Section -->
+    <section id="achievements" class="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-darkbg transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16 reveal">
+                <span class="text-xs font-mono font-semibold uppercase tracking-wider text-primary-500 bg-primary-500/10 px-3 py-1 rounded-full">Milestones</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-3 sm:mt-4 mb-3 sm:mb-4">Key Achievements & Highlights</h2>
+                <p class="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400">Engineering milestones, technical highlights, and architectural contributions.</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-primary-500 to-secondary mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- USER EDITABLE SECTION: Replace or customize the cards below       -->
+            <!-- ================================================================= -->
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
+
+                <!-- Milestone 1 -->
+                <div class="p-6 sm:p-7 rounded-2xl bg-white dark:bg-darkcard border border-gray-200 dark:border-gray-800 hover:border-primary-500/40 shadow-sm transition-all duration-300 reveal reveal-scale flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-primary-500/10 text-primary-500 flex items-center justify-center mb-4 text-base">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 dark:text-white text-base mb-2">Database & Query Tuning</h4>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            Designed relational schemas with composite index optimization and Drizzle ORM migrations in PostgreSQL, maintaining snappy sub-10ms queries.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-gray-100 dark:border-gray-800/80 flex items-center justify-between text-[11px] font-mono text-gray-400">
+                        <span>Milestone #01</span>
+                        <span class="text-primary-500">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <!-- Milestone 2 -->
+                <div class="p-6 sm:p-7 rounded-2xl bg-white dark:bg-darkcard border border-gray-200 dark:border-gray-800 hover:border-primary-500/40 shadow-sm transition-all duration-300 reveal reveal-scale flex flex-col justify-between" style="transition-delay: 0.1s">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center mb-4 text-base">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 dark:text-white text-base mb-2">Modular NestJS Services</h4>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            Architected modular server-side applications following clean separation of concerns, dependency injection, and centralized error handling contracts.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-gray-100 dark:border-gray-800/80 flex items-center justify-between text-[11px] font-mono text-gray-400">
+                        <span>Milestone #02</span>
+                        <span class="text-secondary">Architecture</span>
+                    </div>
+                </div>
+
+                <!-- Milestone 3 -->
+                <div class="p-6 sm:p-7 rounded-2xl bg-white dark:bg-darkcard border border-gray-200 dark:border-gray-800 hover:border-primary-500/40 shadow-sm transition-all duration-300 reveal reveal-scale sm:col-span-2 md:col-span-1 flex flex-col justify-between" style="transition-delay: 0.2s">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-4 text-base">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 dark:text-white text-base mb-2">Type-Safe Contract Design</h4>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            Implemented strict runtime DTO validations, role-based authorization guards, and automated Swagger/OpenAPI documentation for seamless client integration.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-gray-100 dark:border-gray-800/80 flex items-center justify-between text-[11px] font-mono text-gray-400">
+                        <span>Milestone #03</span>
+                        <span class="text-emerald-500">Security & DX</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-darkcard border-t border-gray-200 dark:border-gray-800 transition-colors duration-300 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16 reveal">
+                <span class="text-xs font-mono font-semibold uppercase tracking-wider text-primary-500 bg-primary-500/10 px-3 py-1 rounded-full">Get In Touch</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-3 sm:mt-4 mb-3 sm:mb-4">Have an opportunity or project? Let's talk.</h2>
+                <p class="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400">Whether you're looking for a backend engineer for your team, need a reliable API built, or want to discuss system architecture—my inbox is open.</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-primary-500 to-secondary mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 lg:gap-12">
+                <!-- Left: Contact Details -->
+                <div class="lg:col-span-5 space-y-4 sm:space-y-6 reveal reveal-left">
+                    <div class="bg-gray-50 dark:bg-darkbg p-5 sm:p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
+                        <div class="flex items-start space-x-3.5 sm:space-x-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary-500/10 text-primary-500 flex items-center justify-center shrink-0">
+                                <i class="fas fa-envelope text-lg sm:text-xl"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Email Address</h4>
+                                <a href="mailto:godstreasure72@gmail.com" class="text-sm sm:text-base font-medium text-primary-600 dark:text-primary-400 hover:underline break-all block mt-0.5">
+                                    godstreasure72@gmail.com
+                                </a>
+                                <button onclick="copyEmail()" id="copy-btn" class="mt-2 text-xs font-mono inline-flex items-center space-x-1.5 text-gray-500 dark:text-gray-400 hover:text-primary-500 transition-colors">
+                                    <i class="far fa-copy"></i>
+                                    <span id="copy-text">Click to copy email</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-darkbg p-5 sm:p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
+                        <div class="flex items-start space-x-3.5 sm:space-x-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
+                                <i class="fas fa-map-marker-alt text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Location</h4>
+                                <p class="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300 mt-0.5">
+                                    Uyo, Nigeria (WAT / GMT+1)
+                                </p>
+                                <span class="text-[11px] sm:text-xs text-emerald-500 font-mono mt-1 inline-block">Available for remote & on-site roles</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-darkbg p-5 sm:p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
+                        <div class="flex items-start space-x-3.5 sm:space-x-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
+                                <i class="fas fa-laptop-code text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Focus Areas</h4>
+                                <p class="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300 mt-0.5">
+                                    Backend Architecture & APIs
+                                </p>
+                                <span class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5 block">TypeScript • NestJS • Node.js • PostgreSQL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Direct Message Form -->
+                <div class="lg:col-span-7 reveal reveal-right">
+                    <form id="contact-form" class="bg-gray-50 dark:bg-darkbg p-5 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-4 sm:space-y-6">
+                        <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                            <div>
+                                <label for="name" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5 sm:mb-2">Your Name</label>
+                                <input type="text" id="name" required placeholder="Alex Morgan" class="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 bg-white dark:bg-darkcard border border-gray-200 dark:border-gray-800 rounded-xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                            </div>
+                            <div>
+                                <label for="sender-email" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5 sm:mb-2">Your Email</label>
+                                <input type="email" id="sender-email" required placeholder="alex@company.com" class="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 bg-white dark:bg-darkcard border border-gray-200 dark:border-gray-800 rounded-xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5 sm:mb-2">Subject</label>
+                            <input type="text" id="subject" required placeholder="Backend Engineer Role / Project" class="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 bg-white dark:bg-darkcard border border-gray-200 dark:border-gray-800 rounded-xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5 sm:mb-2">Message</label>
+                            <textarea id="message" required rows="4" sm:rows="5" placeholder="Hi Godstreasure, we have an API service / backend project we'd love to discuss..." class="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 bg-white dark:bg-darkcard border border-gray-200 dark:border-gray-800 rounded-xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"></textarea>
+                        </div>
+
+                        <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-primary-600 to-secondary text-white py-3.5 sm:py-4 rounded-xl font-semibold shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2 text-sm sm:text-base">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Send Message</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-950 py-8 sm:py-12 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left reveal reveal-scale">
+                <div class="flex items-center space-x-2.5 sm:space-x-3">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg overflow-hidden shrink-0 ring-1 ring-white/20">
+                        <img src="favicon.jpg" alt="Logo" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-sm sm:text-base font-bold text-gray-900 dark:text-white">
+                        Godstreasure Joshua Assi
+                    </span>
+                    <span class="text-[11px] sm:text-xs font-mono text-gray-400">| Backend Dev</span>
+                </div>
+
+                <p class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 font-mono">
+                    &copy; <span id="current-year"></span> Godstreasure Joshua Assi.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-6 text-xs sm:text-sm">
+                    <a href="#home" class="text-gray-500 hover:text-primary-500 transition-colors">Top</a>
+                    <a href="#skills" class="text-gray-500 hover:text-primary-500 transition-colors">Stack</a>
+                    <a href="#projects" class="text-gray-500 hover:text-primary-500 transition-colors">Projects</a>
+                    <a href="#contact" class="text-gray-500 hover:text-primary-500 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" aria-label="Back to top" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-primary-600 text-white shadow-lg shadow-indigo-500/30 flex items-center justify-center hover:bg-primary-700 transition-all duration-300 transform translate-y-16 opacity-0 pointer-events-none z-40">
+        <i class="fas fa-arrow-up text-xs sm:text-sm"></i>
+    </button>
+
+    <!-- JavaScript for Theme Toggle, Scroll Animations & Form Handling -->
+    <script>
+        // Set current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // 1. Dark / Light Mode Toggle
+        const html = document.documentElement;
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+
+        function setTheme(isDark) {
+            if (isDark) {
+                html.classList.add('dark');
+                themeToggleIcon.classList.remove('fa-moon', 'text-gray-600');
+                themeToggleIcon.classList.add('fa-sun', 'text-yellow-400');
+                localStorage.setItem('portfolio-theme', 'dark');
+            } else {
+                html.classList.remove('dark');
+                themeToggleIcon.classList.remove('fa-sun', 'text-yellow-400');
+                themeToggleIcon.classList.add('fa-moon', 'text-gray-600');
+                localStorage.setItem('portfolio-theme', 'light');
+            }
+        }
+
+        // Initialize Theme from localStorage or Default to Dark (popular for backend)
+        const savedTheme = localStorage.getItem('portfolio-theme');
+        if (savedTheme === 'light') {
+            setTheme(false);
+        } else {
+            setTheme(true);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = html.classList.contains('dark');
+            setTheme(!isDark);
+        });
+
+        // 2. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 3. Scroll Progress Indicator & Navbar Effects
+        const scrollProgress = document.getElementById('scroll-progress');
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = progress + '%';
+
+            // Floating Glass Navbar scroll reaction
+            if (scrollTop > 40) {
+                navbar.classList.add('nav-glass-scrolled', 'py-2');
+                navbar.classList.remove('py-2.5', 'sm:py-3');
+            } else {
+                navbar.classList.remove('nav-glass-scrolled', 'py-2');
+                navbar.classList.add('py-2.5', 'sm:py-3');
+            }
+
+            // Back to top appearance
+            if (scrollTop > 350) {
+                backToTop.classList.remove('translate-y-16', 'opacity-0', 'pointer-events-none');
+            } else {
+                backToTop.classList.add('translate-y-16', 'opacity-0', 'pointer-events-none');
+            }
+
+            // Active section highlighting in navigation
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollTop >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-primary-500', 'font-semibold');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('text-primary-500', 'font-semibold');
+                }
+            });
+        });
+
+        // Back to top click
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 4. Scroll Reveal Animations (Continuous Fade & Slide In / Out on Every Scroll)
+        const revealOptions = {
+            threshold: 0.08,
+            rootMargin: '10px 0px -20px 0px'
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const el = entry.target;
+                const rect = entry.boundingClientRect;
+
+                if (entry.isIntersecting) {
+                    // Scrolled INTO view: fade in and slide to natural position
+                    el.classList.add('active');
+                    el.classList.remove('exited-top');
+
+                    // Animate skill bars in
+                    const skillBars = el.querySelectorAll('.skill-bar');
+                    skillBars.forEach(bar => {
+                        bar.style.width = bar.getAttribute('data-width');
+                    });
+                } else {
+                    // Scrolled OUT of view: fade out and slide out
+                    el.classList.remove('active');
+
+                    if (rect.top < 0) {
+                        // Exited through the top
+                        el.classList.add('exited-top');
+                    } else {
+                        // Exited through the bottom (or waiting below)
+                        el.classList.remove('exited-top');
+                    }
+
+                    // Reset skill bars so they re-fill on re-entry
+                    const skillBars = el.querySelectorAll('.skill-bar');
+                    skillBars.forEach(bar => {
+                        bar.style.width = '0%';
+                    });
+                }
+            });
+        }, revealOptions);
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // 5. Copy Email Helper
+        function copyEmail() {
+            const email = 'godstreasure72@gmail.com';
+            navigator.clipboard.writeText(email).then(() => {
+                const copyText = document.getElementById('copy-text');
+                copyText.textContent = 'Email copied to clipboard!';
+                copyText.classList.add('text-emerald-500');
+                setTimeout(() => {
+                    copyText.textContent = 'Click to copy email';
+                    copyText.classList.remove('text-emerald-500');
+                }, 3000);
+            });
+        }
+
+        // 6. Contact Form Submission
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            const originalContent = submitBtn.innerHTML;
+            const name = document.getElementById('name').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Preparing Message...</span>';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i><span>Opening Mail Client...</span>';
+                submitBtn.classList.remove('from-primary-600', 'to-secondary');
+                submitBtn.classList.add('bg-emerald-600');
+
+                // Direct mailto bridge to Godstreasure's email
+                const mailtoUrl = `mailto:godstreasure72@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Hi Godstreasure,\n\nFrom: ${name}\n\n${message}`)}`;
+                window.location.href = mailtoUrl;
+
+                setTimeout(() => {
+                    contactForm.reset();
+                    submitBtn.innerHTML = originalContent;
+                    submitBtn.classList.remove('bg-emerald-600');
+                    submitBtn.classList.add('from-primary-600', 'to-secondary');
+                    submitBtn.disabled = false;
+                }, 3500);
+            }, 800);
+        });
+    </script>
+</body>
+</html>
