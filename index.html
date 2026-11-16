@@ -188,21 +188,22 @@
             color: #fff;
             margin-bottom: 1.5rem;
         }
-        .preloader-brand h1 {
-            font-size: 1.75rem;
+        .preloader-brand h1.gt-gradient {
+            font-size: 5rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.05em;
             margin: 0;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%);
+            background: linear-gradient(90deg, #6366f1, #a855f7, #38bdf8, #6366f1);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradient-flow 3s linear infinite;
         }
-        .preloader-brand p {
-            color: #94a3b8;
-            font-size: 0.875rem;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            margin: 0.5rem 0 0 0;
+
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
         .linear-loader {
             width: 220px;
@@ -219,56 +220,6 @@
         }
         @keyframes linear-fill {
             to { width: 100%; }
-        }
-
-        /* =========================================
-           GT POPUP (Welcome Modal)
-           ========================================= */
-        .gt-popup-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.55);
-            z-index: 100000;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-        .gt-popup-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .gt-popup {
-            background: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 1.5rem;
-            padding: 2rem 2.5rem;
-            max-width: 420px;
-            width: 90%;
-            text-align: center;
-            color: #fff;
-            transform: scale(0.9);
-            transition: transform 0.4s ease;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        .gt-popup-overlay.active .gt-popup {
-            transform: scale(1);
-        }
-        .gt-popup h3 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin: 0 0 0.75rem 0;
-            letter-spacing: -0.02em;
-        }
-        .gt-popup p {
-            color: #9ca3af;
-            font-size: 0.95rem;
-            margin: 0 0 1.75rem 0;
-            line-height: 1.6;
         }
 
         /* Code Block Glow */
@@ -321,24 +272,10 @@
          ========================================= -->
     <div id="preloader">
         <div class="preloader-brand">
-            <h1>Godstreasure Joshua Assi</h1>
-            <p>Backend Developer</p>
+            <h1 class="gt-gradient">GT</h1>
         </div>
         <div class="linear-loader">
             <div class="linear-loader-bar"></div>
-        </div>
-    </div>
-
-    <!-- =========================================
-         GT POPUP (Welcome Modal)
-         ========================================= -->
-    <div id="gt-popup-overlay" class="gt-popup-overlay">
-        <div class="gt-popup">
-            <h3>Welcome to My Portfolio</h3>
-            <p>Explore my projects, skills, and experience as a Backend Developer.</p>
-            <button id="close-gt-popup" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-xl font-medium transition-colors shadow-lg shadow-indigo-500/25">
-                Enter Portfolio
-            </button>
         </div>
     </div>
 
@@ -1292,21 +1229,14 @@
         });
 
         // =========================================
-        // PRELOADER & GT POPUP
+        // PRELOADER (3s linear - then website opens)
         // =========================================
-        (function initLoaderAndPopup() {
+        (function initPreloader() {
             const preloader = document.getElementById('preloader');
-            const gtPopupOverlay = document.getElementById('gt-popup-overlay');
-            const closeGtPopup = document.getElementById('close-gt-popup');
 
             // Hide preloader after 3 seconds with linear fade-out
             setTimeout(() => {
                 preloader.classList.add('fade-out');
-
-                // Show GT popup after preloader starts fading
-                setTimeout(() => {
-                    gtPopupOverlay.classList.add('active');
-                }, 500);
             }, 3000);
 
             // Remove preloader from DOM after fade completes
@@ -1315,11 +1245,6 @@
                     preloader.style.display = 'none';
                 }
             }, 4000);
-
-            // Close GT popup on button click
-            closeGtPopup.addEventListener('click', () => {
-                gtPopupOverlay.classList.remove('active');
-            });
         })();
     </script>
 </body>
